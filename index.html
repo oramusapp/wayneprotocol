@@ -3,14 +3,568 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0a0b0d">
+  <meta name="theme-color" content="#0b0b0c">
   <meta name="robots" content="noindex, nofollow">
-  <title>The Wayne Protocol</title>
+  <title>The Code</title>
   <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-  <main id="app" aria-live="polite"></main>
-  <noscript>The Wayne Protocol wymaga JavaScriptu.</noscript>
-  <script src="./assets/app.js"></script>
+<header class="top">
+  <div class="brand"><span class="mark">THE CODE</span><span class="sub">Architektura Życia</span></div>
+  <nav class="tabs" id="tabs" aria-label="Widoki">
+    <button type="button" data-view="today">Dziś</button>
+    <button type="button" data-view="code" class="on">Kodeks</button>
+    <button type="button" data-view="review">Przegląd</button>
+    <button type="button" data-view="wall">Ściana</button>
+  </nav>
+</header>
+
+<!-- ======================================================================= DZIŚ -->
+<main class="view" id="view-today" hidden>
+  <section class="card">
+    <div class="eyebrow" id="todayDate"></div>
+    <h2>Protokół dnia</h2>
+    <p class="dim small">Odhaczam bloki, które wykonałem. Zapis zostaje w tej przeglądarce.</p>
+    <div class="score"><b id="todayScore">0</b><span>/ <span id="todayMax">0</span></span><div class="bar"><i id="todayBar"></i></div></div>
+    <ol class="checklist" id="checklist"></ol>
+  </section>
+  <section class="card">
+    <h3>Na dziś</h3>
+    <label for="fMit">Najważniejsze zadanie dnia</label>
+    <input type="text" id="fMit" maxlength="200" placeholder="Jedno zadanie, które przesuwa cel kwartału">
+    <label for="fHard">Trudna rzecz</label>
+    <input type="text" id="fHard" maxlength="200" placeholder="Rzecz, której wolałbym uniknąć, zrobiona przed 12:00">
+    <label for="fMade">Co dziś stworzyłem</label>
+    <input type="text" id="fMade" maxlength="300" placeholder="Tekst, nagranie, część projektu…">
+    <label for="fSleep">Sen ostatniej nocy (godziny)</label>
+    <input type="text" id="fSleep" inputmode="decimal" maxlength="4" placeholder="np. 6.8">
+    <p class="warn small" id="sleepWarn" hidden>Poniżej 6 godzin: obowiązuje tryb ochronny snu (Kodeks, rozdz. II).</p>
+    <label for="fNote">Dziennik</label>
+    <textarea id="fNote" maxlength="4000" placeholder="Fakty dnia, błędy, wnioski. Bez ocen siebie: co się stało i co dalej."></textarea>
+  </section>
+  <section class="card">
+    <h3>Ostatnie 28 dni</h3>
+    <div class="grid" id="history"></div>
+    <p class="dim small">Liczba w kratce to procent wykonanych bloków. Pusta kratka to dzień bez zapisu.</p>
+  </section>
+  <section class="card oath-card">
+    <h3>Przysięga</h3>
+    <div class="oath" id="oathToday"></div>
+  </section>
+</main>
+
+<!-- ======================================================================= KODEKS -->
+<main class="view" id="view-code">
+  <nav class="toc card" aria-label="Spis treści">
+    <div class="eyebrow">Spis treści</div>
+    <ol>
+      <li><a href="#s-code">I. The Code</a></li>
+      <li><a href="#s-daily">II. The Daily Protocol</a></li>
+      <li><a href="#s-physical">III. The Physical Code</a></li>
+      <li><a href="#s-nutrition">IV. The Nutrition Code</a></li>
+      <li><a href="#s-intellect">V. The Intellectual Code</a></li>
+      <li><a href="#s-character">VI. The Character Code</a></li>
+      <li><a href="#s-faith">VII. The Faith Code</a></li>
+      <li><a href="#s-legacy">VIII. The Legacy Code</a></li>
+      <li><a href="#s-strategy">IX. The Strategic Code</a></li>
+      <li><a href="#s-review">X. The Weekly Review</a></li>
+      <li><a href="#s-consequences">XI. The Consequences</a></li>
+      <li><a href="#s-oath">XII. The Oath</a></li>
+    </ol>
+  </nav>
+
+  <section class="doc preface">
+    <h1>THE CODE</h1>
+    <p class="lead">Architektura Życia</p>
+    <p>Nie działam dlatego, że mam ochotę. Działam, bo zdecydowałem, kim chcę być. Nie szukam łatwej drogi, szukam właściwej.</p>
+    <p>Wygląd, pieniądze i produktywność są dla mnie środkami. Celem jest człowiek, którego słowo ma znaczenie: z silnym charakterem, żywą wiarą, sprawnym ciałem i wykształconym umysłem, który zostawia po sobie coś wartościowego.</p>
+    <p>Ten kodeks piszę na całe życie. Dyscyplina służy w nim życiu, wierze i charakterowi, a nie cierpieniu dla samego cierpienia. Sen jest fundamentem systemu i żadna ambicja go nie narusza. Kodeks ma być wykonalny przez dekady, w zdrowiu i w chorobie, w dobrych i złych latach. Gdy jakaś zasada przestaje służyć temu celowi, poprawiam ją podczas przeglądu, zamiast łamać ją po cichu.</p>
+    <p class="dim small">Inspiracją był „The Code” z serialu Dexter: idea osobistego kodeksu, który porządkuje życie. Moralność, wartości i cel są moje.</p>
+  </section>
+
+  <!-- I -->
+  <section class="doc" id="s-code">
+    <div class="eyebrow">I</div>
+    <h2>The Code</h2>
+    <p class="dim">Dwadzieścia pięć zasad. Każda kończy się zachowaniem, które da się sprawdzić.</p>
+    <ol class="rules">
+      <li><h3>Discipline over feelings <span>Dyscyplina ponad nastrój</span></h3>
+        <p>Nastrój jest informacją, nie poleceniem. Decyzję podejmuję wieczorem, na chłodno. Rano ją wykonuję.</p>
+        <p class="do"><b>W praktyce:</b> plan dnia zapisuję poprzedniego wieczoru. Każde zadanie zaczynam od pięciu minut pracy bez względu na ochotę. Plan zmieniam z powodu faktów (choroba, obowiązek wobec bliskich), nigdy z powodu niechęci.</p></li>
+      <li><h3>Guard your time <span>Strzegę czasu</span></h3>
+        <p>Czas jest jedynym zasobem, którego nie odzyskam. Każda godzina ma przydział, zanim zrobi to ktoś inny.</p>
+        <p class="do"><b>W praktyce:</b> dzień w blokach. Powiadomienia wyłączone poza połączeniami od rodziny. Media społecznościowe tylko w bloku twórczym, do publikacji i odpowiedzi. Na prośbę o mój czas odpowiadam „sprawdzę i dam znać”, a decyduję po zajrzeniu do planu.</p></li>
+      <li><h3>Amor fati <span>Kocham swój los</span></h3>
+        <p>To, co mnie spotyka, jest materiałem do pracy. Nie spieram się z faktami. Akceptacja nie oznacza bierności: przyjmuję fakt i działam w jego granicach.</p>
+        <p class="do"><b>W praktyce:</b> przy każdej przeciwności zapisuję trzy odpowiedzi: co jest faktem, co zależy ode mnie, jaki jest następny krok. Wieczorem dopisuję, czego mnie ta trudność nauczyła.</p></li>
+      <li><h3>Ignore the herd <span>Nie idę za tłumem</span></h3>
+        <p>Popularność opinii nie dowodzi jej prawdziwości. Moje życie mierzę własną miarą.</p>
+        <p class="do"><b>W praktyce:</b> przed ważną decyzją pytam, czy wybrałbym tak samo, gdyby nikt się o niej nie dowiedział. Raz w miesiącu wypisuję nawyki przejęte bez namysłu i usuwam te, których nie umiem uzasadnić.</p></li>
+      <li><h3>Question everything <span>Sprawdzam przekonania</span></h3>
+        <p>Autorytet wymaga uzasadnienia, a pewność wymaga dowodu. Dotyczy to także moich przekonań. Pytam, żeby dojść do prawdy, a nie żeby podważać dla zasady.</p>
+        <p class="do"><b>W praktyce:</b> przy mocnej tezie pytam: skąd to wiem, jakie są dowody, co przekonałoby mnie, że się mylę. Raz w tygodniu czytam najlepszy argument strony, z którą się nie zgadzam.</p></li>
+      <li><h3>Suffer on purpose <span>Trud z wyboru</span></h3>
+        <p>Dobrowolny, dawkowany dyskomfort uczy panowania nad sobą. Trud ma cel i granicę. Zdrowia, snu ani relacji dla niego nie poświęcam.</p>
+        <p class="do"><b>W praktyce:</b> zimny prysznic rano, bieg przed świtem także w deszczu, piątkowe wyrzeczenie (słodycze, rozrywka lub mięso), raz w tygodniu jedna rzecz poza strefą komfortu. Ostry ból, kontuzja lub gorączka kończą wysiłek.</p></li>
+      <li><h3>Do hard things daily <span>Codziennie jedna trudna rzecz</span></h3>
+        <p>Każdego dnia robię co najmniej jedną rzecz, której wolałbym uniknąć.</p>
+        <p class="do"><b>W praktyce:</b> wieczorem wpisuję trudną rzecz na jutro: odkładaną rozmowę, telefon, zadanie. Wykonuję ją przed 12:00.</p></li>
+      <li><h3>Silence is power <span>Cisza</span></h3>
+        <p>Pracuję bez widowni. Ciągła stymulacja odbiera głębię myślenia, a ogłaszanie planów zastępuje ich wykonanie.</p>
+        <p class="do"><b>W praktyce:</b> Deep Work bez telefonu w pokoju i bez muzyki ze słowami. Codziennie co najmniej jeden spacer bez słuchawek. O planach mówię dopiero po ich wykonaniu.</p></li>
+      <li><h3>Build, don't consume <span>Tworzę, zanim konsumuję</span></h3>
+        <p>Konsumpcja ma zasilać tworzenie. Każdego dnia wytwarzam coś, co zostaje.</p>
+        <p class="do"><b>W praktyce:</b> rozrywka dopiero po wykonaniu dziennej jednostki twórczej (rozdz. VIII). Czytam z ołówkiem albo notatnikiem. Rozrywka ma swoje okno i nie wypełnia przerw w pracy.</p></li>
+      <li><h3>Study great men <span>Uczę się od wielkich</span></h3>
+        <p>Biografie i dzieła ludzi, którzy coś zbudowali, pokazują charakter pod presją. Ich błędy uczą tak samo jak sukcesy.</p>
+        <p class="do"><b>W praktyce:</b> zawsze mam w toku jedną biografię. Z każdej spisuję trzy decyzje, trzy błędy i jedną zasadę do przetestowania. Raz na kwartał wybieram jedną postać do głębszego studium.</p></li>
+      <li><h3>Faith before ego <span>Wiara przed ego</span></h3>
+        <p>Ambicja jest dobra, gdy służy czemuś większemu niż ja. Sukces nie zwalnia mnie z pokory ani z moralności.</p>
+        <p class="do"><b>W praktyce:</b> zaczynam i kończę dzień modlitwą. Przed ważną decyzją pytam, czy zgadza się z sumieniem i Ewangelią. Niczego nie zdobywam kosztem uczciwości. Niedziela należy do Boga i rodziny.</p></li>
+      <li><h3>Earn your confidence <span>Pewność z dotrzymanych obietnic</span></h3>
+        <p>Pewność siebie buduję obietnicami dotrzymanymi sobie i innym. Nie da się jej zagrać.</p>
+        <p class="do"><b>W praktyce:</b> składam mniej obietnic i dotrzymuję wszystkich. Wieczorem sprawdzam, które zobowiązania wykonałem. Gdy nie zdążę z terminem, uprzedzam przed nim, a nie tłumaczę się po fakcie.</p></li>
+      <li><h3>Stand alone <span>Stoję na własnych nogach</span></h3>
+        <p>Moja wartość nie zależy od aprobaty. Potrafię iść wybraną drogą, gdy nikt jej nie popiera. Samodzielność nie oznacza izolacji (rozdz. VI, Brotherhood Code).</p>
+        <p class="do"><b>W praktyce:</b> najpierw decyduję na podstawie zasad, potem konsultuję z zaufanymi ludźmi. Nie publikuję po to, żeby sprawdzić, ile jestem wart. Utrzymuję się sam i nie przerzucam na innych odpowiedzialności za swoje wybory.</p></li>
+      <li><h3>Choose your company <span>Wybieram otoczenie</span></h3>
+        <p>Upodabniam się do ludzi, z którymi spędzam czas.</p>
+        <p class="do"><b>W praktyce:</b> co tydzień spędzam czas z kimś, kto stawia poprzeczkę wyżej niż ja. Ograniczam kontakt z ludźmi, którzy ciągną w dół, bez wrogości i bez dramatów. Staram się być dla innych kimś, kto podnosi ich standard.</p></li>
+      <li><h3>Leave a legacy <span>Zostawiam dziedzictwo</span></h3>
+        <p>Życie mierzę tym, co po mnie zostanie: rodziną, dziełami i ludźmi, którym pomogłem.</p>
+        <p class="do"><b>W praktyce:</b> mam jeden projekt długoterminowy, nad którym pracuję co tydzień. Raz w roku spisuję, co zbudowałem, a co tylko zużyłem.</p></li>
+      <li><h3>Sleep is the foundation <span>Sen jest fundamentem</span></h3>
+        <p>Bez snu nie ma siły, koncentracji ani panowania nad sobą. Ambicja nie odbiera mi snu.</p>
+        <p class="do"><b>W praktyce:</b> o 21:00 gaszę światło, o 04:00 wstaję. Telefon ładuje się poza sypialnią. Po 20:00 nie patrzę w ekrany. Po nocy krótszej niż 6 godzin obowiązuje tryb ochronny (rozdz. II).</p></li>
+      <li><h3>Keep your word <span>Moje słowo ma wagę</span></h3>
+        <p>Mówię to, co zrobię, i robię to, co powiedziałem.</p>
+        <p class="do"><b>W praktyce:</b> każdą obietnicę zapisuję w jednym miejscu. Nie mówię „spróbuję”, gdy znaczy to „nie”. Jestem na miejscu pięć minut przed czasem.</p></li>
+      <li><h3>Own everything <span>Pełna odpowiedzialność</span></h3>
+        <p>Za wszystko, na co mam wpływ, odpowiadam ja. Okoliczności wyjaśniają, ale nie usprawiedliwiają.</p>
+        <p class="do"><b>W praktyce:</b> przy błędzie pierwsze zdanie brzmi „to moja odpowiedzialność”, drugie mówi, co naprawiam. W dzienniku ani w rozmowie nie obwiniam pogody, ludzi ani systemu.</p></li>
+      <li><h3>Train for life <span>Ciało na całe życie</span></h3>
+        <p>Trenuję tak, żeby w wieku siedemdziesięciu lat być sprawnym, a nie tylko dobrze wyglądać za trzy miesiące.</p>
+        <p class="do"><b>W praktyce:</b> technika przed ciężarem. Mobilność dwa razy dziennie. Co czwarty tydzień lżejszy. Ból stawu kończy ćwiczenie (rozdz. III).</p></li>
+      <li><h3>Measure what matters <span>Mierzę zamiast zgadywać</span></h3>
+        <p>To, czego nie mierzę, łatwo sobie wmówić.</p>
+        <p class="do"><b>W praktyce:</b> codziennie odhaczam protokół. Raz w tygodniu sprawdzam średnią masę ciała, wyniki treningowe, godziny snu i liczbę jednostek twórczych. Raz w roku robię badania krwi.</p></li>
+      <li><h3>Order your space <span>Porządek wokół mnie</span></h3>
+        <p>Porządek w domu i przy biurku ułatwia porządek w głowie.</p>
+        <p class="do"><b>W praktyce:</b> ścielę łóżko zaraz po wstaniu. Wieczorem przez dziesięć minut sprzątam i przygotowuję rzeczy na jutro. Na biurku leży tylko bieżące zadanie.</p></li>
+      <li><h3>Master your money <span>Panuję nad pieniędzmi</span></h3>
+        <p>Samodzielność wymaga niezależności finansowej.</p>
+        <p class="do"><b>W praktyce:</b> wydaję mniej, niż zarabiam. W dniu wypłaty odkładam stały procent dochodu. Nie biorę długu na konsumpcję. Raz w miesiącu przeglądam budżet.</p></li>
+      <li><h3>Serve others <span>Siła służy innym</span></h3>
+        <p>Moja siła ma chronić i wspierać rodzinę, przyjaciół i słabszych.</p>
+        <p class="do"><b>W praktyce:</b> codziennie wykonuję jeden konkretny gest pomocy lub troski wobec bliskich. Dzielę się wiedzą. Gdy ktoś naprawdę potrzebuje pomocy, plan ustępuje.</p></li>
+      <li><h3>Keep the sabbath <span>Szanuję odpoczynek</span></h3>
+        <p>Rytm pracy wymaga rytmu odpoczynku. Siódmy dzień należy do Boga, rodziny i regeneracji.</p>
+        <p class="do"><b>W praktyce:</b> w niedzielę nie robię Deep Work i nie trenuję intensywnie. Jest Msza, spacer, czas z bliskimi i przegląd tygodnia. Godziny snu i pobudki zostają te same.</p></li>
+      <li><h3>Speak with precision <span>Mówię mniej i dokładniej</span></h3>
+        <p>Słowa też są czynami.</p>
+        <p class="do"><b>W praktyce:</b> w sporze robię pauzę przed odpowiedzią i zaczynam od jednego zdania. Unikam plotek, przekleństw i przesady. Codziennie piszę, żeby ćwiczyć jasność myśli.</p></li>
+    </ol>
+  </section>
+
+  <!-- II -->
+  <section class="doc" id="s-daily">
+    <div class="eyebrow">II</div>
+    <h2>The Daily Protocol</h2>
+    <p>Stałe godziny są ważniejsze niż idealny dzień. Ten sam rytm każdego dnia, także w weekend, zmniejsza liczbę decyzji i chroni sen.</p>
+    <div class="table-wrap"><table class="schedule">
+      <tbody>
+        <tr><th>04:00</th><td><b>Pobudka.</b> Ta sama godzina, bez drzemki. Telefon poza zasięgiem. Woda, łóżko pościelone, modlitwa i dwie minuty ciszy. Czytam przysięgę i cel kwartału.</td></tr>
+        <tr><th>04:00–05:00</th><td><b>Morning Routine.</b> Bieg przed świtem: 20–35 minut spokojnie, w tempie, przy którym da się mówić. Zimny prysznic: 1–3 minuty. Przegląd planu dnia: najważniejsze zadanie, trudna rzecz, jednostka twórcza.</td></tr>
+        <tr><th>05:00–05:30</th><td><b>Morning Mobility.</b> Kręgosłup, biodra, barki i kostki (zestaw w rozdz. III). Ruch powolny i kontrolowany, oddech przez nos.</td></tr>
+        <tr><th>05:30–06:30</th><td><b>Deep Work I.</b> Najważniejsze zadanie intelektualne dnia. Cisza, telefon w innym pokoju, jedna karta przeglądarki. Pracuję nad czymś długoterminowym, nie nad pocztą.</td></tr>
+        <tr><th>06:30–07:00</th><td>Śniadanie (rozdz. IV). Pięć minut na plan bloków pracy.</td></tr>
+        <tr><th>07:00–09:30</th><td><b>Praca, blok A.</b> Najtrudniejsze obowiązki zawodowe, zanim spadnie koncentracja. Pocztę i komunikatory sprawdzam dopiero na końcu bloku.</td></tr>
+        <tr><th>09:30–09:45</th><td>Przerwa: wstaję, chodzę, piję wodę, jem przekąskę. Bez ekranu.</td></tr>
+        <tr><th>09:45–12:00</th><td><b>Praca, blok B.</b> Zadania zawodowe i osobiste. Komunikację zbieram w jedno okno, około 11:30. Trudną rzecz dnia kończę przed 12:00.</td></tr>
+        <tr><th>12:00–12:45</th><td>Obiad i 10–15 minut marszu na świeżym powietrzu. Ostatnia kawa najpóźniej teraz.</td></tr>
+        <tr><th>12:45–14:30</th><td><b>Praca, blok C.</b> Sprawy administracyjne, spotkania, telefony, obowiązki domowe.</td></tr>
+        <tr><th>14:30–15:15</th><td><b>Blok twórczy.</b> Dzienna jednostka twórcza: pisanie, nagranie TikToka, praca nad projektem, rozwijanie idei. Publikacja i odpowiedzi na komentarze mieszczą się w tym bloku.</td></tr>
+        <tr><th>15:15–15:30</th><td>Przekąska przed treningiem, przebranie się, plan treningu.</td></tr>
+        <tr><th>15:30–16:45</th><td><b>Training.</b> Około 75 minut według rotacji tygodniowej (rozdz. III).</td></tr>
+        <tr><th>16:45–17:30</th><td><b>Regeneracja.</b> Posiłek potreningowy, prysznic, 10–15 minut odpoczynku w ciszy.</td></tr>
+        <tr><th>17:30–19:00</th><td><b>Deep Work II / rozwój intelektualny.</b> Własne projekty, czytanie (co najmniej 45 minut), pisanie.</td></tr>
+        <tr><th>19:00–20:30</th><td><b>Evening Mobility &amp; Routine.</b> Kolacja. Mobilność i rozciąganie, 20 minut. Higiena, ubranie, torba i plan na jutro. Ekrany wyłączone od 20:00, światło przyciemnione.</td></tr>
+        <tr><th>20:30–21:00</th><td><b>Studium i modlitwa.</b> Pismo Święte, rachunek sumienia, krótki zapis w dzienniku, modlitwa.</td></tr>
+        <tr><th>21:00</th><td><b>Sen.</b> Światło zgaszone.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="dim small">Gdy praca zawodowa ma sztywne godziny, bloki A–C zastępuje praca, a jednostka twórcza przechodzi na początek Deep Work II. Stałe punkty dnia zostają: pobudka, poranek, trening, wieczór i sen.</p>
+
+    <h3>Ochrona snu</h3>
+    <p>Rytm 21:00–04:00 daje siedem godzin w łóżku. Snu jest zwykle mniej, bo zasypianie i krótkie przebudzenia też trwają. Siedem godzin to dolna granica zalecana dorosłym przez towarzystwa medycyny snu (AASM, NSF), dlatego ten rytm wymaga ochrony.</p>
+    <ul class="list">
+      <li>Pobudka zawsze o 04:00, także w weekend. Regularna pora wstawania stabilizuje rytm dobowy.</li>
+      <li>O 20:45 jestem w łóżku. Lampy przygaszone od 20:00, sypialnia ciemna, cicha i chłodna (około 17–19°C).</li>
+      <li>Kofeina najpóźniej do 12:00, bo działa wiele godzin. Alkohol pogarsza jakość snu, więc wieczorem go nie piję.</li>
+      <li>Ostatni duży posiłek co najmniej dwie godziny przed snem.</li>
+      <li>Jeśli po trzech tygodniach tego rytmu jestem senny w ciągu dnia, zasypiam o 20:30. Pobudki nie przesuwam.</li>
+      <li>Wieczorne wyjście (rodzina, wydarzenie) najwyżej raz w tygodniu. Następnego dnia wstaję o 04:00 i działam w trybie ochronnym.</li>
+    </ul>
+    <h3>Tryb ochronny (noc krótsza niż 6 godzin)</h3>
+    <ul class="list">
+      <li>Pobudka o zwykłej porze. Nie odsypiam rano.</li>
+      <li>Zamiast biegu 20 minut marszu. Trening tego dnia lekki: technika, mobilność, spokojne cardio. Bez prób maksymalnych i bez sparingu.</li>
+      <li>Dozwolona drzemka do 20 minut, najpóźniej o 14:00.</li>
+      <li>Deep Work I zostaje, ale decyzje o dużych skutkach przekładam na następny dzień.</li>
+      <li>Wieczorem w łóżku o 20:30.</li>
+      <li>Po dwóch krótkich nocach z rzędu szukam przyczyny i usuwam ją przed kolejnym wieczorem.</li>
+    </ul>
+    <h3>Wersja minimalna dnia</h3>
+    <p>W chorobie, w podróży albo w kryzysie rodzinnym obowiązuje minimum, które utrzymuje ciągłość: modlitwa rano i wieczorem, 10 minut mobilności, 30 minut skupionej pracy lub czytania, jeden gest troski wobec bliskich i sen o stałej porze. Dzień w wersji minimalnej jest dniem dotrzymanym.</p>
+  </section>
+
+  <!-- III -->
+  <section class="doc" id="s-physical">
+    <div class="eyebrow">III</div>
+    <h2>The Physical Code</h2>
+    <p>Cel: ciało silne, sprawne, wytrzymałe i zdrowe przez dekady. Trening buduje zdolność do życia, pracy i obrony siebie oraz bliskich.</p>
+    <h3>Zasady</h3>
+    <ul class="list">
+      <li><b>Ruch codzienny.</b> Poza treningiem 8–10 tysięcy kroków. Co godzinę pracy wstaję na dwie minuty.</li>
+      <li><b>Siła.</b> Dwa lub trzy razy w tygodniu ćwiczenia wielostawowe: przysiad, martwy ciąg, wyciskanie leżąc i nad głowę, podciąganie, wiosłowanie, noszenie ciężarów. Zostawiam 1–3 powtórzenia w zapasie. Progresja: +1 powtórzenie albo +2,5 kg, gdy wszystkie serie wyszły technicznie czysto.</li>
+      <li><b>Kondycja i bieg.</b> Poranny bieg jest spokojny. Większość pracy tlenowej wykonuję w tempie, przy którym mogę rozmawiać. Raz w tygodniu interwały, w sobotę jedna dłuższa sesja. Tygodniowy kilometraż zwiększam najwyżej o około 10%.</li>
+      <li><b>Walka i samoobrona.</b> Dwa razy w tygodniu zajęcia w klubie z trenerem (np. boks, BJJ, zapasy, krav maga). Sparing tylko pod nadzorem, z ochraniaczami, z partnerami, którym ufam. Chronię głowę: ciężki sparing w stójce zdarza się rzadko.</li>
+      <li><b>Mobilność 05:00</b> (30 min): koci grzbiet i rotacje odcinka piersiowego, pozycja 90/90 dla bioder, wykrok z rotacją, głęboki przysiad z podparciem, mobilizacja kostek przy ścianie, krążenia i przeprosty barków z gumą, zwis na drążku 2 × 30–60 s, oddech przeponowy.</li>
+      <li><b>Mobilność 19:00</b> (20 min): rozciąganie zginaczy bioder, pośladków i tylnej taśmy, klatka piersiowa w framudze drzwi, odcinek piersiowy na wałku, stopy na piłeczce, pięć minut spokojnego oddychania.</li>
+      <li><b>Postawa i chód.</b> Stoję na całych stopach, mostek w górze, barki nisko, broda lekko cofnięta. Chodzę spokojnym, pewnym krokiem z wyprostowaną głową. Ekran trzymam na wysokości oczu.</li>
+      <li><b>Zimny prysznic.</b> 1–3 minuty rano, z kontrolowanym oddechem. Pomijam przy gorączce i infekcji, a przy chorobach serca pytam lekarza. Traktuję go jako ćwiczenie panowania nad sobą. Dowody na jego korzyści zdrowotne są ograniczone i nie przypisuję mu więcej.</li>
+      <li><b>Regeneracja.</b> Sen (rozdz. II), posiłek w ciągu dwóch godzin po treningu, jeden pełny dzień odpoczynku w tygodniu, co czwarty tydzień lżejszy.</li>
+      <li><b>Higiena i wygląd.</b> Codziennie prysznic, zęby szczotkowane dwa razy i nitkowane raz. Fryzjer co 3–4 tygodnie, zarost zadbany. Ubrania proste, dopasowane i czyste, buty czyste. Wygląd jest formą szacunku dla siebie i innych.</li>
+    </ul>
+    <h3>Rotacja tygodniowa (15:30–16:45)</h3>
+    <div class="table-wrap"><table class="week">
+      <thead><tr><th>Dzień</th><th>Trening</th><th>Poranek</th></tr></thead>
+      <tbody>
+        <tr><td>Pon</td><td>Siła A: przysiad, wyciskanie leżąc, podciąganie, noszenie ciężarów</td><td>Bieg 30 min</td></tr>
+        <tr><td>Wt</td><td>Sztuki walki: technika i lekki sparing, 10 min core</td><td>Bieg 20 min</td></tr>
+        <tr><td>Śr</td><td>Kondycja: interwały (np. 6 × 3 min mocno, 2 min truchtu) i ćwiczenia uzupełniające</td><td>Marsz 30 min</td></tr>
+        <tr><td>Czw</td><td>Sztuki walki: technika, drille, samoobrona</td><td>Bieg 20 min</td></tr>
+        <tr><td>Pt</td><td>Siła B: martwy ciąg, wyciskanie nad głowę, wiosłowanie, wykroki</td><td>Bieg 30 min</td></tr>
+        <tr><td>Sob</td><td>Wytrzymałość: 60–75 min spokojnie (bieg, rower, marsz z plecakiem) albo sport z ludźmi</td><td>Marsz lub mobilność</td></tr>
+        <tr><td>Nd</td><td>Odpoczynek: spacer z rodziną</td><td>Marsz</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Periodyzacja</h3>
+    <ul class="list">
+      <li>Cykl czterotygodniowy: trzy tygodnie stopniowego wzrostu, czwarty z objętością mniejszą o około 40% i bez prób maksymalnych.</li>
+      <li>Co kwartał test: bieg na 5 km, maksymalna liczba podciągnięć, szacowany ciężar maksymalny w przysiadzie i martwym ciągu. Wyniki zapisuję.</li>
+      <li>Sygnały przeciążenia: tętno spoczynkowe przez dwa dni o 7 lub więcej uderzeń powyżej mojej średniej, spadek wyników na dwóch kolejnych treningach, gorszy sen, drażliwość, ból stawów. Reakcja: 2–3 dni lekko, potem powrót. Ból, który trwa dłużej niż tydzień, konsultuję z lekarzem albo fizjoterapeutą.</li>
+    </ul>
+  </section>
+
+  <!-- IV -->
+  <section class="doc" id="s-nutrition">
+    <div class="eyebrow">IV</div>
+    <h2>The Nutrition Code</h2>
+    <p>Jedzenie ma wspierać trening, sen, koncentrację i zdrowie na dekady. Inspiracją jest podejście Raya Peata, ale traktuję je krytycznie. Przy każdej zasadzie zaznaczam, na czym się opiera:</p>
+    <p class="legend-tags"><span class="tag ok">Udokumentowane</span> spójne wyniki badań i zalecenia towarzystw naukowych · <span class="tag hyp">Hipoteza</span> idea Peata lub innych autorów bez mocnego potwierdzenia w badaniach na ludziach · <span class="tag pref">Preferencja</span> mój wybór, rozsądny, ale niewynikający z dowodów.</p>
+
+    <h3>Piramida</h3>
+    <p class="dim small">Według załączonej grafiki: od podstawy (najczęściej) do szczytu (najrzadziej), obok to, czego unikam.</p>
+    <div class="pyramid" role="img" aria-label="Piramida żywieniowa: u podstawy węglowodany z owoców, miodu i soków; wyżej nabiał i jaja oraz białko zwierzęce; potem tłuszcze i warzywa korzeniowe; na szczycie wątroba; obok kosz z wielonienasyconymi kwasami tłuszczowymi">
+      <div class="tier t1"><b>Wątroba</b><span>raz w tygodniu, mała porcja</span></div>
+      <div class="tier t2"><div><b>Tłuszcze</b><span>masło, olej kokosowy, ser</span></div><div><b>Warzywa korzeniowe</b><span>ziemniaki, bataty, marchew</span></div></div>
+      <div class="tier t3"><div><b>Nabiał i jaja</b><span>mleko, twaróg, ser, jaja, lody</span></div><div><b>Białko zwierzęce</b><span>ryby białe, krewetki, kraby, ostrygi, rosół na kościach</span></div></div>
+      <div class="tier t4"><b>Węglowodany</b><span>owoce (melon, papaja, mango, pomarańcze, wiśnie, liczi), miód, sok pomarańczowy</span></div>
+      <div class="bin"><b>Do kosza</b><span>wielonienasycone kwasy tłuszczowe: oleje roślinne (np. słonecznikowy), orzechy. Moja korekta w zasadzie 6.</span></div>
+    </div>
+    <p>Grafika oddaje schemat Peata: dużo cukrów z owoców, miodu i soków, dużo nabiału, białko z owoców morza i bulionu, tłuszcze nasycone zamiast olejów roślinnych, a do tego marchew i wątroba w małych ilościach. Przyjmuję z niej kierunek, ale tam, gdzie badania mówią co innego, wprowadzam korekty: w tłuszczach oraz w roli orzechów i tłustych ryb (zasada 6).</p>
+
+    <h3>Zasady</h3>
+    <ol class="nutri">
+      <li><span class="tag ok">Udokumentowane</span> <b>Kalorie według celu.</b> Masa ciała zmienia się zgodnie z bilansem energetycznym. Punkt wyjścia to około 33 kcal na kilogram masy ciała przy moim poziomie aktywności. To przybliżenie, które koryguję według wyników. Ważę się rano, liczy się średnia tygodniowa. Redukcja: −0,5% masy tygodniowo. Budowa: +0,25%. Jeśli trend przez dwa tygodnie odbiega od celu, zmieniam spożycie o 150–200 kcal. Posiłki liczę w Fortislly.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Białko: 1,6–2,2 g na kg masy ciała dziennie.</b> Ten zakres wspiera budowę i utrzymanie mięśni przy treningu siłowym (m.in. metaanaliza Morton i in., 2018). Rozkładam je na 3–5 posiłków po 30–50 g.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Węglowodany wokół wysiłku.</b> Przy codziennym bieganiu i 75 minutach treningu węglowodany wspierają wydolność i regenerację. Źródła według piramidy: owoce, sok pomarańczowy, miód, ziemniaki, bataty, a do tego biały ryż <span class="tag pref">Preferencja</span>.<br><span class="tag hyp">Hipoteza</span> Peat uważał, że cukry z owoców i miodu wspierają metabolizm i tarczycę lepiej niż skrobia. Brakuje na to mocnych dowodów u ludzi, więc liczę łączną ilość i jakość jedzenia.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Nabiał i jaja jako podstawa białka.</b> Mleko, twaróg, ser, jogurt i jaja dają pełnowartościowe białko i wapń. Przy nietolerancji laktozy wybieram produkty fermentowane albo bez laktozy. <span class="tag pref">Preferencja</span> Lody jako dodatek, nie podstawa.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Wątroba: 100–150 g raz w tygodniu.</b> Jest bardzo bogata w witaminę A, B12, miedź i żelazo. Nadmiar witaminy A szkodzi, dlatego nie zwiększam porcji ani częstotliwości.</li>
+      <li><b>Tłuszcze świadomie.</b><br>
+        <span class="tag ok">Udokumentowane</span> W badaniach zastępowanie tłuszczów nasyconych wielonienasyconymi obniża cholesterol LDL i wiąże się z mniejszym ryzykiem chorób serca. Z korzyściami wiążą się też kwasy omega-3 z ryb i regularne jedzenie orzechów.<br>
+        <span class="tag hyp">Hipoteza</span> Teza Peata, że wielonienasycone kwasy tłuszczowe (zwłaszcza linolowy z olejów roślinnych) szkodzą metabolizmowi, nie jest potwierdzona w badaniach klinicznych.<br>
+        <b>Moja zasada:</b> unikam smażenia w głębokim oleju i żywności wysoko przetworzonej. To główne źródła olejów roślinnych, a ich ograniczenie ma sens niezależnie od tej hipotezy. Smażę na maśle, ghee, oleju kokosowym lub oliwie, w umiarkowanych ilościach. Tłustą rybę jem raz w tygodniu albo decyzję o omega-3 podejmuję z lekarzem. Garść orzechów jest dopuszczalna, ale nie jest podstawą diety. Raz w roku robię lipidogram, a gdy LDL rośnie, ograniczam tłuszcze nasycone.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Warzywa korzeniowe i błonnik.</b> Ziemniaki, bataty i marchew codziennie. Błonnik z warzyw i owoców wspiera trawienie i zdrowie jelit. <span class="tag hyp">Hipoteza</span> Według Peata surowa marchew wiąże w jelitach endotoksyny i obniża estrogen. Dowody są słabe. <span class="tag pref">Preferencja</span> Sałatka ze startej marchwi z octem, solą i odrobiną oleju kokosowego zostaje, bo jest tania, smaczna i daje błonnik. Jem też inne warzywa, w tym zielone.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Proste jedzenie.</b> W kontrolowanym badaniu (Hall i in., 2019) dieta z żywności wysoko przetworzonej prowadziła do zjadania około 500 kcal dziennie więcej. 90% posiłków przygotowuję z prostych składników, jeden lub dwa posiłki w tygodniu jem bez reguł.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Kawa do 12:00, alkohol rzadko.</b> Kofeina działa wiele godzin, a alkohol pogarsza sen. <span class="tag pref">Preferencja</span> Kawę piję z mlekiem, do posiłku.</li>
+      <li><span class="tag pref">Preferencja</span> <b>Sok i miód z umiarem.</b> Sok pomarańczowy do dwóch szklanek dziennie, najlepiej wokół treningu, bo płynne kalorie słabo sycą. Miód zamiast słodyczy. Wszystko wliczam w kalorie.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Nawodnienie i sól.</b> Około 30–35 ml wody na kilogram masy ciała, więcej w dni treningowe i upały. Przy dużym poceniu solę jedzenie do smaku. <span class="tag hyp">Hipoteza</span> Peat zalecał dużo soli dla metabolizmu. Przy nadciśnieniu ilość soli ustalam z lekarzem.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Witamina D i badania.</b> Od października do marca przyjmuję witaminę D w dawce zgodnej z polskimi zaleceniami dla dorosłych, ustaloną z lekarzem. Raz w roku: morfologia, lipidogram, glukoza, TSH, ferrytyna i witamina D. Dietę koryguję według wyników, a nie według teorii.</li>
+      <li><span class="tag ok">Udokumentowane</span> <b>Bez ryzykownych restrykcji.</b> Nie głodzę się, nie stosuję długich postów ani diet eliminacyjnych bez wskazań medycznych. Piątkowe wyrzeczenie (rozdz. VII) dotyczy rodzaju jedzenia, nie ilości.</li>
+    </ol>
+
+    <h3>Dzień przykładowy</h3>
+    <div class="table-wrap"><table class="meals">
+      <tbody>
+        <tr><th>04:00</th><td>Szklanka wody. Przed biegiem dłuższym niż 30 minut pół szklanki soku pomarańczowego.</td></tr>
+        <tr><th>06:30</th><td>Jajecznica z 3 jaj na maśle, twaróg z miodem, owoc, kawa z mlekiem.</td></tr>
+        <tr><th>09:30</th><td>Szklanka mleka albo jogurt i owoc.</td></tr>
+        <tr><th>12:00</th><td>Ryba biała albo wołowina, ziemniaki, sałatka z surowej marchwi, gotowane warzywo.</td></tr>
+        <tr><th>15:15</th><td>Owoc z miodem albo szklanka soku. Lekko, bez tłuszczu.</td></tr>
+        <tr><th>16:45</th><td>Mięso, krewetki lub jaja, ryż albo bataty, owoce, szklanka mleka.</td></tr>
+        <tr><th>19:00</th><td>Twaróg lub ser, owoce, rosół na kościach albo galaretka. Najpóźniej dwie godziny przed snem.</td></tr>
+        <tr><th>Raz w tygodniu</th><td>Wątroba (100–150 g) zamiast mięsa na obiad. Tłusta ryba w inny dzień.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="dim small">To nie jest porada medyczna. Przy chorobach przewlekłych, przyjmowanych lekach albo zaburzeniach odżywiania zasady ustalam z lekarzem lub dietetykiem.</p>
+  </section>
+
+  <!-- V -->
+  <section class="doc" id="s-intellect">
+    <div class="eyebrow">V</div>
+    <h2>The Intellectual Code</h2>
+    <p>Umysł trenuję codziennie, tak jak ciało. Czytam, żeby rozumieć, a nie żeby zaliczać tytuły.</p>
+    <h3>Obowiązki codzienne</h3>
+    <ul class="list">
+      <li><b>Czytanie:</b> co najmniej 45 minut w Deep Work II. Jedna książka z kanonu i jedna biografia w toku. Notatki na marginesie, a po każdym rozdziale trzy zdania własnymi słowami.</li>
+      <li><b>Pismo Święte:</b> codziennie o 20:30 (rozdz. VII).</li>
+      <li><b>Pisanie:</b> codziennie co najmniej 300 słów: esej, notatka, scenariusz albo list. Pisanie porządkuje myślenie.</li>
+      <li><b>Dziennik:</b> wieczorem pięć minut. Fakty dnia, decyzje, błędy, wnioski.</li>
+      <li><b>Samodzielne myślenie:</b> raz w tygodniu wybieram jedno powszechne przekonanie i sprawdzam je w źródłach (rozdz. I, zasada 5).</li>
+      <li><b>Argumentacja i język:</b> raz w tygodniu zapisuję najmocniejszy argument za stanowiskiem, którego nie podzielam, a potem własną odpowiedź. Sprawdzam znaczenie słów, których używam, i usuwam z tekstów zbędne.</li>
+      <li><b>Wiedza o świecie:</b> co miesiąc jedna książka albo kurs z historii, psychologii lub nauk ścisłych.</li>
+    </ul>
+    <h3>Kanon lektur</h3>
+    <div class="canon">
+      <div><h4>Filozofia starożytna</h4><ul><li>Platon, <i>Obrona Sokratesa</i>, <i>Państwo</i></li><li>Arystoteles, <i>Etyka nikomachejska</i></li><li>Plutarch, <i>Żywoty sławnych mężów</i></li></ul></div>
+      <div><h4>Stoicyzm</h4><ul><li>Marek Aureliusz, <i>Rozmyślania</i></li><li>Seneka, <i>Listy moralne do Lucyliusza</i></li><li>Epiktet, <i>Encheiridion</i> i <i>Diatryby</i></li></ul></div>
+      <div><h4>Chrześcijaństwo</h4><ul><li>Pismo Święte</li><li>św. Augustyn, <i>Wyznania</i></li><li>Tomasz à Kempis, <i>O naśladowaniu Chrystusa</i></li><li>Blaise Pascal, <i>Myśli</i></li><li>G.K. Chesterton, <i>Ortodoksja</i></li><li>C.S. Lewis, <i>Chrześcijaństwo po prostu</i></li></ul></div>
+      <div><h4>Nietzsche (czytany krytycznie)</h4><ul><li><i>Tako rzecze Zaratustra</i></li><li><i>Wiedza radosna</i> (amor fati)</li><li><i>Z genealogii moralności</i></li></ul><p class="dim small">Biorę od niego samoprzezwyciężanie i amor fati. Jego krytykę chrześcijaństwa czytam, żeby zrozumieć zarzuty i umieć na nie odpowiedzieć.</p></div>
+      <div><h4>Literatura klasyczna</h4><ul><li>Homer, <i>Iliada</i>, <i>Odyseja</i></li><li>Dante, <i>Boska komedia</i></li><li>Szekspir, <i>Hamlet</i>, <i>Makbet</i></li><li>Dostojewski, <i>Zbrodnia i kara</i>, <i>Bracia Karamazow</i></li><li>Tołstoj, <i>Wojna i pokój</i></li><li>Conrad, <i>Lord Jim</i></li><li>Sienkiewicz, <i>Trylogia</i></li></ul></div>
+      <div><h4>Historia i biografie</h4><ul><li>Tukidydes, <i>Wojna peloponeska</i></li><li>Andrew Roberts, <i>Churchill</i></li><li>Ron Chernow, <i>Washington</i></li><li>Walter Isaacson, <i>Benjamin Franklin</i></li><li>Witold Pilecki, <i>Raport Witolda</i></li></ul></div>
+      <div><h4>Strategia i sztuka wojenna</h4><ul><li>Sun Tzu, <i>Sztuka wojny</i></li><li>Carl von Clausewitz, <i>O wojnie</i></li><li>Niccolò Machiavelli, <i>Książę</i></li><li>Miyamoto Musashi, <i>Księga pięciu kręgów</i></li><li>Jocko Willink, Leif Babin, <i>Ekstremalne przywództwo</i></li></ul></div>
+      <div><h4>Psychologia i rozwój człowieka</h4><ul><li>Viktor Frankl, <i>Człowiek w poszukiwaniu sensu</i></li><li>Daniel Kahneman, <i>Pułapki myślenia</i></li><li>Cal Newport, <i>Deep Work</i>, <i>So Good They Can't Ignore You</i></li><li>Robert Greene, <i>Mistrzostwo</i></li></ul></div>
+    </div>
+  </section>
+
+  <!-- VI -->
+  <section class="doc" id="s-character">
+    <div class="eyebrow">VI</div>
+    <h2>The Character Code</h2>
+    <p>Charakter widać w drobnych zachowaniach powtarzanych codziennie.</p>
+    <ul class="list">
+      <li><b>Dotrzymuję słowa.</b> Obietnica zapisana zostaje wykonana albo odwołana z wyprzedzeniem.</li>
+      <li><b>Nie narzekam bez potrzeby.</b> Problem zgłaszam razem z propozycją rozwiązania.</li>
+      <li><b>Nie szukam wymówek.</b> Najpierw mówię o swojej części odpowiedzialności, potem o okolicznościach.</li>
+      <li><b>Nie reaguję impulsywnie.</b> W złości robię trzy oddechy przed odpowiedzią. Ważnych wiadomości nie wysyłam w emocjach: czekam do następnego bloku.</li>
+      <li><b>Mówię mniej, ale precyzyjniej.</b> Słucham do końca. Odpowiadam krótko i konkretnie.</li>
+      <li><b>Postawa, mowa ciała, styl wypowiedzi.</b> Wyprostowana sylwetka, spokojne ręce, kontakt wzrokowy, wolniejsze tempo mówienia, bez wypełniaczy.</li>
+      <li><b>Nie zabiegam o uwagę i się nie przechwalam.</b> O swoich osiągnięciach mówię, gdy ktoś pyta albo gdy to komuś pomoże.</li>
+      <li><b>Nie szukam ciągłej aprobaty.</b> Cudzą opinię przyjmuję jako informację. O mojej wartości decydują zasady.</li>
+      <li><b>Jestem punktualny.</b> Pięć minut przed czasem. O spóźnieniu uprzedzam przed umówioną godziną.</li>
+      <li><b>Biorę odpowiedzialność za błędy.</b> Przyznaję się, naprawiam, wyciągam wniosek. Bez użalania się nad sobą.</li>
+      <li><b>Nie decyduję pod wpływem samych emocji.</b> Decyzje o dużych skutkach podejmuję po nocy snu i po zapisaniu argumentów za i przeciw.</li>
+      <li><b>Szanuję innych, nie rezygnując z zasad.</b> Jestem uprzejmy dla każdego i stanowczy wobec tego, co sprzeczne z kodeksem.</li>
+    </ul>
+    <h3>The Brotherhood Code</h3>
+    <ul class="list">
+      <li>Otaczam się ludźmi ambitnymi, uczciwymi i zdyscyplinowanymi. Szukam ich w klubie, w kościele, w pracy i w projektach.</li>
+      <li>Uczę się od mądrzejszych i bardziej doświadczonych. Raz w miesiącu pytam kogoś takiego o jego drogę i słucham.</li>
+      <li>Nie tracę czasu na relacje oparte wyłącznie na rozrywce i plotkach. Odchodzę od nich bez potępiania ludzi.</li>
+      <li>Siła nie oznacza izolacji. Codziennie poświęcam czas rodzinie. Co tydzień rozmawiam z przyjacielem twarzą w twarz albo przez telefon.</li>
+      <li>Jestem lojalny. Nie mówię o przyjaciołach za ich plecami tego, czego nie powiedziałbym im w oczy.</li>
+      <li>Odpowiadam za ludzi, którzy na mnie liczą. Pamiętam o ich ważnych sprawach i wobec nich dotrzymuję słowa w pierwszej kolejności.</li>
+    </ul>
+  </section>
+
+  <!-- VII -->
+  <section class="doc" id="s-faith">
+    <div class="eyebrow">VII</div>
+    <h2>The Faith Code</h2>
+    <p>Wiara porządkuje ambicję. Dzień zaczyna się i kończy przed Bogiem, a modlitwa jest wpisana w protokół jak każdy inny blok.</p>
+    <ul class="list">
+      <li><b>04:00.</b> Krótka modlitwa poranna: ofiarowanie dnia, Ojcze nasz, prośba o wytrwałość, dwie minuty ciszy.</li>
+      <li><b>Południe.</b> Krótka modlitwa (np. Anioł Pański) jako pauza i powrót do celu.</li>
+      <li><b>20:30 Pismo Święte.</b> Jeden rozdział Ewangelii albo Listów i jeden Psalm. Do tego jeden rozdział Księgi Przysłów według dnia miesiąca: ma 31 rozdziałów, po jednym na każdy dzień. Zapisuję jedno zdanie, które mam wypełnić.</li>
+      <li><b>Rachunek sumienia w pięciu krokach.</b> Wdzięczność za konkretne rzeczy dnia, prośba o światło, przegląd dnia godzina po godzinie, żal za zło i zaniedbania, jedno postanowienie na jutro.</li>
+      <li><b>Niedziela.</b> Msza święta, odpoczynek, rodzina. Bez Deep Work i bez intensywnego treningu.</li>
+      <li><b>Spowiedź</b> regularnie, na przykład raz w miesiącu, i zawsze po poważnym upadku.</li>
+      <li><b>Piątek.</b> Wyrzeczenie w duchu pokuty: rezygnuję z mięsa, słodyczy albo rozrywki. Ma przypominać o celu, nie wyczerpywać ciała.</li>
+      <li><b>Służba.</b> Raz w miesiącu konkretna pomoc w parafii, dla potrzebujących albo w rodzinie, bez rozgłosu.</li>
+      <li><b>Wspólnota.</b> Mam co najmniej jedną osobę lub grupę, z którą rozmawiam o wierze i która może mnie upomnieć.</li>
+      <li><b>Pokora wobec sukcesu.</b> Podczas przeglądu tygodnia dziękuję za to, co się udało, i pytam, czy moja ambicja nadal służy dobru.</li>
+    </ul>
+  </section>
+
+  <!-- VIII -->
+  <section class="doc" id="s-legacy">
+    <div class="eyebrow">VIII</div>
+    <h2>The Legacy Code</h2>
+    <p>Codziennie produkuję coś wartościowego. Niewiele, ale bez przerw. Celem są jakość i trwałość, a zasięg przychodzi jako ich skutek.</p>
+    <h3>Dzienna jednostka twórcza (14:30–15:15)</h3>
+    <p>Każdego dnia, poza niedzielą, wykonuję co najmniej jedną z nich:</p>
+    <ul class="list">
+      <li>Tekst: co najmniej 300 słów eseju, artykułu, wątku albo rozdziału.</li>
+      <li>Film: nagrany i zmontowany TikTok lub krótki film. Jedna myśl, jasna puenta.</li>
+      <li>Projekt: 45 minut pracy nad produktem, kodem, kursem albo książką.</li>
+      <li>Wiedza dla innych: lekcja, instrukcja albo odpowiedź, która komuś realnie pomoże.</li>
+    </ul>
+    <h3>System</h3>
+    <ol class="list">
+      <li><b>Zbieram.</b> Każdy pomysł trafia od razu do jednego notatnika idei. W chwili zapisu go nie oceniam.</li>
+      <li><b>Wybieram.</b> W niedzielnym przeglądzie wybieram tematy na cały tydzień. Rano nie zastanawiam się, „o czym dziś”.</li>
+      <li><b>Tworzę.</b> W bloku twórczym, bez telefonu (chyba że nim nagrywam).</li>
+      <li><b>Publikuję.</b> Ukończone ma pierwszeństwo przed idealnym. Publikuję regularnie, w stałe dni.</li>
+      <li><b>Archiwizuję.</b> Wszystko trafia do jednego archiwum. Po roku powstaje z niego materiał na książkę, kurs albo serię.</li>
+    </ol>
+    <h3>Rytm</h3>
+    <ul class="list">
+      <li>Tygodniowo: 3–5 krótkich filmów, jeden dłuższy tekst, postęp w projekcie długoterminowym.</li>
+      <li>Kwartalnie: jeden większy, skończony produkt, na przykład seria, poradnik albo moduł projektu.</li>
+      <li>Rocznie: jedno dzieło, które ma przetrwać: książka, kurs albo produkt.</li>
+    </ul>
+    <h3>Zasady twórczości</h3>
+    <ul class="list">
+      <li>Statystyki sprawdzam raz w tygodniu, podczas przeglądu.</li>
+      <li>Większość treści tworzę tak, żeby była aktualna także za pięć lat.</li>
+      <li>Marka opiera się na prawdzie o mnie i na kodeksie. Nie wymyślam wizerunku.</li>
+      <li>Nie publikuję w emocjach. Tekst napisany w gniewie czytam ponownie następnego dnia.</li>
+      <li>Miarą jest liczba ukończonych jednostek i ich jakość, a nie liczba wyświetleń.</li>
+    </ul>
+  </section>
+
+  <!-- IX -->
+  <section class="doc" id="s-strategy">
+    <div class="eyebrow">IX</div>
+    <h2>The Strategic Code</h2>
+    <p>Jedno wielkie zadanie na każdy okres. Wiele celów naraz daje mały postęp we wszystkich.</p>
+    <div class="levels">
+      <div><b>Rok</b><span>Jeden nadrzędny cel, który zmieni moje życie. Zapisany jednym zdaniem, z miarą i datą.</span></div>
+      <div><b>Kwartał</b><span>Jeden główny projekt albo umiejętność, która przybliża cel roku.</span></div>
+      <div><b>Miesiąc</b><span>Jedno ambitne wyzwanie spoza strefy komfortu.</span></div>
+      <div><b>Dzień</b><span>Jedno najważniejsze zadanie, wykonane w Deep Work I.</span></div>
+    </div>
+    <h3>Priorytetyzacja</h3>
+    <ul class="list">
+      <li>Przy każdym zadaniu pytam, czy przybliża cel kwartału. Jeśli nie, robię je krótko, zlecam albo skreślam.</li>
+      <li>Pytanie dnia: jaka jedna rzecz sprawi, że reszta stanie się łatwiejsza albo zbędna?</li>
+      <li>Najważniejsze zadanie wykonuję pierwsze, przed pocztą, telefonami i cudzymi sprawami.</li>
+      <li>Nowy projekt przyjmuję tylko wtedy, gdy kończę albo porzucam inny.</li>
+    </ul>
+    <h3>Eliminacja</h3>
+    <ul class="list">
+      <li>Prowadzę listę rzeczy, których nie robię: na przykład przeglądania mediów bez celu, spotkań bez agendy, projektów bez związku z celem roku.</li>
+      <li>Raz w miesiącu wypisuję wszystko, co zajmuje mi czas, i usuwam jedną pozycję.</li>
+      <li>Odmawiam uprzejmie i krótko, bez długich tłumaczeń.</li>
+    </ul>
+  </section>
+
+  <!-- X -->
+  <section class="doc" id="s-review">
+    <div class="eyebrow">X</div>
+    <h2>The Weekly Review</h2>
+    <p>Niedziela, 17:30–18:15. Spokojnie, z dziennikiem i danymi z tygodnia. Formularz jest w zakładce „Przegląd”.</p>
+    <ol class="list">
+      <li>Ile dni protokołu dotrzymałem, wliczając dni w wersji minimalnej?</li>
+      <li>Ile wynosił średni sen? Ile było nocy krótszych niż 6 godzin i dlaczego?</li>
+      <li>Trening: co wykonałem, z jakimi wynikami, czy widzę sygnały przeciążenia?</li>
+      <li>Czy najważniejsze zadania przybliżyły cel kwartału? Co konkretnie posunęło się naprzód?</li>
+      <li>Ile jednostek twórczych ukończyłem i co opublikowałem?</li>
+      <li>Których zasad nie dotrzymałem? Co było przyczyną: system, otoczenie czy decyzja?</li>
+      <li>Wiara i relacje: modlitwa, Msza, czas z rodziną i przyjaciółmi. Komu pomogłem?</li>
+      <li>Za co jestem wdzięczny?</li>
+      <li>Co zmieniam w przyszłym tygodniu? Jedna zmiana.</li>
+      <li>Plan: najważniejsze zadania na każdy dzień, tematy twórcze, trudne rzeczy, terminy.</li>
+    </ol>
+    <p>Raz w miesiącu dłuższy przegląd: wyzwanie miesiąca, finanse, lista rzeczy, których nie robię. Raz w kwartale: cel kwartału, testy sprawności, wybór kolejnej postaci do studium. Raz w roku: cel roku, badania krwi oraz bilans tego, co zbudowałem, i tego, co tylko zużyłem.</p>
+  </section>
+
+  <!-- XI -->
+  <section class="doc" id="s-consequences">
+    <div class="eyebrow">XI</div>
+    <h2>The Consequences</h2>
+    <p>Złamanie kodeksu wymaga reakcji. Reakcja ma przywrócić porządek, a nie niszczyć. Celem jest powrót, a nie kara.</p>
+    <h3>Reakcja</h3>
+    <ol class="list">
+      <li><b>Pojedyncze potknięcie.</b> Zapisuję w dzienniku fakt, przyczynę i wyzwalacz. Wracam do kodeksu w następnym bloku dnia, a nie „od poniedziałku”.</li>
+      <li><b>Nigdy dwa razy z rzędu.</b> Po opuszczonym dniu następny wykonuję co najmniej w wersji minimalnej i krótko analizuję, co zawiodło.</li>
+      <li><b>Wzorzec: ta sama zasada złamana trzy razy w ciągu dwóch tygodni.</b> Zmieniam system zamiast dokładać silnej woli: usuwam wyzwalacz, zmieniam porę albo otoczenie, upraszczam zasadę. Omawiam to z zaufaną osobą.</li>
+      <li><b>Złamane słowo wobec drugiego człowieka.</b> W ciągu 24 godzin przepraszam, naprawiam szkodę, jeśli się da, i proponuję nowy termin, którego dotrzymam.</li>
+      <li><b>Sprawa sumienia.</b> Rachunek sumienia, spowiedź, zadośćuczynienie.</li>
+    </ol>
+    <h3>Czego nie robię</h3>
+    <ul class="list">
+      <li>Nie skracam snu, żeby nadrobić stracony czas.</li>
+      <li>Nie głodzę się i nie robię treningów za karę.</li>
+      <li>Nie mówię o sobie z pogardą, ani w myślach, ani w dzienniku.</li>
+      <li>Nie porzucam całego kodeksu z powodu jednego złego dnia.</li>
+      <li>Nie ukrywam porażek przed sobą. Zapisuję je tak samo jak sukcesy.</li>
+    </ul>
+  </section>
+
+  <!-- XII -->
+  <section class="doc" id="s-oath">
+    <div class="eyebrow">XII</div>
+    <h2>The Oath</h2>
+    <p class="dim small">Czytam ją każdego ranka o 04:00, na głos albo w ciszy.</p>
+    <div class="oath" id="oathMain"></div>
+  </section>
+</main>
+
+<!-- ======================================================================= PRZEGLĄD -->
+<main class="view" id="view-review" hidden>
+  <section class="card">
+    <div class="eyebrow" id="reviewWeek"></div>
+    <h2>Przegląd tygodnia</h2>
+    <p class="dim small">Niedziela, 17:30–18:15. Odpowiedzi zapisują się w tej przeglądarce.</p>
+    <div class="stats" id="weekStats"></div>
+    <div id="reviewForm"></div>
+  </section>
+  <section class="card">
+    <h3>Poprzednie przeglądy</h3>
+    <div id="reviewList" class="dim small">Brak zapisanych przeglądów.</div>
+  </section>
+  <section class="card">
+    <h3>Kopia zapasowa</h3>
+    <p class="dim small">Dane są zapisane tylko na tym urządzeniu. Kopię warto co jakiś czas zapisać w bezpiecznym miejscu.</p>
+    <div class="row">
+      <button type="button" class="btn" id="btnExport">Zapisz kopię (JSON)</button>
+      <label class="btn file">Wczytaj kopię<input type="file" id="fileImport" accept="application/json,.json" hidden></label>
+    </div>
+    <p class="small" id="backupMsg" role="status"></p>
+    <div id="legacyBox" hidden>
+      <h4>Dane poprzedniej aplikacji (The Wayne Protocol)</h4>
+      <p class="dim small">Na tym urządzeniu są zapisy z poprzedniej aplikacji: protokół, dziennik i historia. Nie zostały usunięte. Możesz je zapisać do pliku.</p>
+      <button type="button" class="btn" id="btnLegacy">Zapisz dane Wayne Protocol</button>
+    </div>
+  </section>
+</main>
+
+<!-- ======================================================================= ŚCIANA -->
+<main class="view" id="view-wall" hidden>
+  <div class="wall-actions"><button type="button" class="btn gold" id="btnPrint">Drukuj stronę na ścianę</button><span class="dim small">A4, pionowo. W oknie druku wybierz „Zapisz jako PDF”, jeśli chcesz plik.</span></div>
+  <article class="wall" id="wall">
+    <header><h1>THE CODE</h1><p>Nie działam, bo mam ochotę. Działam, bo zdecydowałem, kim chcę być.</p></header>
+    <div class="wall-cols">
+      <div>
+        <h2>Zasady</h2>
+        <ol class="wall-rules" id="wallRules"></ol>
+      </div>
+      <div>
+        <h2>Dzień</h2>
+        <table class="wall-day">
+          <tr><th>04:00</th><td>Pobudka, modlitwa, przysięga</td></tr>
+          <tr><th>04:00–05:00</th><td>Bieg, zimny prysznic, plan dnia</td></tr>
+          <tr><th>05:00–05:30</th><td>Mobilność</td></tr>
+          <tr><th>05:30–06:30</th><td>Deep Work I</td></tr>
+          <tr><th>06:30–14:30</th><td>Praca i obowiązki, trudna rzecz przed 12:00</td></tr>
+          <tr><th>14:30–15:15</th><td>Jednostka twórcza</td></tr>
+          <tr><th>15:30–16:45</th><td>Trening</td></tr>
+          <tr><th>16:45–17:30</th><td>Regeneracja</td></tr>
+          <tr><th>17:30–19:00</th><td>Deep Work II, czytanie</td></tr>
+          <tr><th>19:00–20:30</th><td>Mobilność, wieczór, bez ekranów od 20:00</td></tr>
+          <tr><th>20:30–21:00</th><td>Pismo Święte, rachunek sumienia</td></tr>
+          <tr><th>21:00</th><td>Sen</td></tr>
+        </table>
+        <h2>Przysięga</h2>
+        <div class="oath" id="oathWall"></div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<script src="./assets/app.js"></script>
 </body>
 </html>
