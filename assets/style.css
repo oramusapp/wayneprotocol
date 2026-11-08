@@ -11,15 +11,6 @@ html, body { margin: 0; background: var(--bg); color: var(--text); font-family: 
 body { min-height: 100vh; line-height: 1.6; }
 a { color: var(--text); text-decoration-color: var(--accent); text-underline-offset: 3px; }
 
-.top { position: sticky; top: 0; z-index: 5; background: rgba(11, 11, 12, .94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
-  padding: calc(10px + env(safe-area-inset-top)) 16px 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.brand { display: flex; align-items: baseline; gap: 10px; }
-.mark { font-family: var(--serif); letter-spacing: .32em; font-size: .95rem; }
-.sub { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); }
-.tabs { display: flex; gap: 4px; }
-.tabs button { appearance: none; background: transparent; color: var(--dim); border: 1px solid transparent; border-radius: 8px; padding: 7px 11px; font: inherit; font-size: .85rem; cursor: pointer; min-height: 36px; }
-.tabs button.on { color: var(--text); border-color: var(--line); background: var(--panel2); }
-.tabs button:hover { color: var(--text); }
 
 .view { max-width: 760px; margin: 0 auto; padding: 22px 16px calc(48px + env(safe-area-inset-bottom)); }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-bottom: 14px; }
@@ -39,7 +30,7 @@ p { margin: 0 0 12px; }
 /* dokument */
 .toc ol { margin: 0; padding-left: 0; list-style: none; columns: 2; column-gap: 18px; }
 .toc li { padding: 3px 0; break-inside: avoid; font-size: .92rem; }
-.doc { padding: 26px 0 18px; border-top: 1px solid var(--line); scroll-margin-top: 110px; }
+.doc { padding: 26px 0 18px; border-top: 1px solid var(--line); scroll-margin-top: 16px; }
 .doc.preface { border-top: 0; padding-top: 8px; }
 .rules { list-style: none; counter-reset: r; padding: 0; margin: 0; }
 .rules > li { counter-increment: r; position: relative; padding: 16px 0 6px 46px; border-bottom: 1px solid #1d1d20; }
@@ -83,44 +74,22 @@ th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom
 .levels div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; border-left: 2px solid var(--accent); padding: 6px 0 6px 12px; }
 .levels b { font-family: var(--serif); font-weight: 400; color: var(--gold); }
 .oath p { font-family: var(--serif); font-size: 1.12rem; margin: 0 0 6px; }
-.oath-card .oath p { font-size: 1.02rem; }
 
-/* dziś */
-.score { display: flex; align-items: baseline; gap: 6px; margin: 4px 0 10px; flex-wrap: wrap; }
-.score b { font-family: var(--serif); font-size: 2.2rem; font-weight: 400; } .score > span { color: var(--dim); }
-.bar { flex-basis: 100%; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
-.bar i { display: block; height: 100%; width: 0; background: var(--accent2); transition: width .2s; }
-.checklist { list-style: none; padding: 0; margin: 0; }
-.checklist li { display: flex; gap: 10px; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid #1d1d20; }
-.checklist input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--accent); flex: 0 0 auto; }
-.checklist label { display: flex; flex-direction: column; cursor: pointer; text-transform: none; letter-spacing: 0; font-size: .95rem; color: var(--text); margin: 0; }
-.checklist .time { font-family: var(--serif); color: var(--gold); font-size: .82rem; }
-label { display: block; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin: 14px 0 6px; }
-input[type=text], textarea { width: 100%; background: #0e0e10; border: 1px solid var(--line); color: var(--text); border-radius: 9px; padding: 10px 12px; font: inherit; font-size: 16px; }
-textarea { min-height: 90px; resize: vertical; line-height: 1.45; }
-input:focus, textarea:focus { outline: none; border-color: var(--accent2); }
-.grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-.cell { aspect-ratio: 1; border-radius: 6px; border: 1px solid var(--line); background: #0e0e10; display: flex; align-items: center; justify-content: center; font-size: .72rem; color: var(--dim); }
-.cell.hi { background: rgba(163, 38, 42, .85); color: #fff; border-color: transparent; }
-.cell.mid { background: rgba(163, 38, 42, .45); color: #f2dede; border-color: transparent; }
-.cell.lo { background: rgba(163, 38, 42, .18); color: var(--text); }
-.cell.now { outline: 2px solid var(--gold); outline-offset: 1px; }
 
-/* przegląd */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 10px 0 4px; }
-.stat { background: #0e0e10; border: 1px solid var(--line); border-radius: 9px; padding: 9px 6px; text-align: center; }
-.stat b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.3rem; }
-.stat span { font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
-#reviewForm label { text-transform: none; letter-spacing: 0; font-size: .9rem; color: var(--text); }
-details.past { border-top: 1px solid var(--line); padding: 8px 0; } details.past summary { cursor: pointer; color: var(--text); }
-details.past p { white-space: pre-wrap; color: var(--text); }
-.row { display: flex; gap: 10px; flex-wrap: wrap; }
-.btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); background: var(--panel2); color: var(--text); border-radius: 9px; padding: 10px 14px; font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer; min-height: 42px; text-transform: none; letter-spacing: 0; margin: 0; }
+/* pobranie ściany */
+.download { border-top: 1px solid var(--line); padding: 26px 0 8px; text-align: center; }
+.btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); background: var(--panel2); color: var(--text); border-radius: 9px; padding: 11px 18px; font: inherit; font-weight: 600; font-size: .92rem; cursor: pointer; min-height: 44px; text-decoration: none; }
 .btn:hover { border-color: var(--accent2); }
-.btn.gold { background: var(--accent); border-color: transparent; color: #fff; }
 
+/* ściana (wall.html → sciana.png, A4 794 × 1123 px przy 96 dpi, marginesy 12 mm) */
+body.wall-src { background: #fff; width: 794px; min-height: 1123px; padding: 45px; }
+body.wall-src .wall { padding: 0; border-radius: 0; background: #fff; }
+body.wall-src .wall h1 { font-size: 40px; } body.wall-src .wall header p { font-size: 16px; }
+body.wall-src .wall h2 { font-size: 12px; margin-top: 4px; }
+body.wall-src .wall-rules { font-size: 14px; line-height: 1.38; } body.wall-src .wall-rules li { margin-bottom: 5px; }
+body.wall-src .wall-day { font-size: 13.3px; } body.wall-src .wall-day th, body.wall-src .wall-day td { padding: 4px 6px; }
+body.wall-src .wall .oath p { font-size: 14.6px; margin-bottom: 5px; }
 /* ściana */
-.wall-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
 .wall { background: #f4f1ea; color: #141414; border-radius: 6px; padding: 28px 26px; }
 .wall header { text-align: center; border-bottom: 2px solid #141414; padding-bottom: 10px; margin-bottom: 14px; }
 .wall h1 { font-size: 2rem; margin: 0; letter-spacing: .3em; }
@@ -135,23 +104,8 @@ details.past p { white-space: pre-wrap; color: var(--text); }
 
 @media (max-width: 600px) {
   .toc ol { columns: 1; } .canon { grid-template-columns: 1fr; }
-  .wall-cols { grid-template-columns: 1fr; } .stats { grid-template-columns: repeat(2, 1fr); }
   .tier.t1 { width: 60%; } .tier.t2 { width: 86%; } .tier.t3 { width: 100%; }
   .rules > li { padding-left: 38px; } h1 { font-size: 2rem; }
   .levels div { grid-template-columns: 70px 1fr; }
 }
 
-@media print {
-  @page { size: A4 portrait; margin: 12mm; }
-  html, body { background: #fff !important; color: #000; }
-  .top, .wall-actions, .card .btn, #legacyBox { display: none !important; }
-  .view { max-width: none; padding: 0; }
-  .wall { border-radius: 0; padding: 0; background: #fff; }
-  .doc, .card { break-inside: auto; color: #000; background: #fff; border-color: #ccc; }
-  body.print-wall .view:not(#view-wall) { display: none !important; }
-  .wall h1 { font-size: 30pt; } .wall header p { font-size: 12pt; }
-  .wall h2 { font-size: 9pt; margin-top: 4px; }
-  .wall-rules { font-size: 10.5pt; line-height: 1.38; } .wall-rules li { margin-bottom: 5px; }
-  .wall-day { font-size: 10pt; } .wall-day th, .wall-day td { padding: 4px 6px; }
-  .wall .oath p { font-size: 11pt; margin-bottom: 5px; }
-}

@@ -9,50 +9,6 @@
   <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-<header class="top">
-  <div class="brand"><span class="mark">THE CODE</span><span class="sub">Architektura Życia</span></div>
-  <nav class="tabs" id="tabs" aria-label="Widoki">
-    <button type="button" data-view="today">Dziś</button>
-    <button type="button" data-view="code" class="on">Kodeks</button>
-    <button type="button" data-view="review">Przegląd</button>
-    <button type="button" data-view="wall">Ściana</button>
-  </nav>
-</header>
-
-<!-- ======================================================================= DZIŚ -->
-<main class="view" id="view-today" hidden>
-  <section class="card">
-    <div class="eyebrow" id="todayDate"></div>
-    <h2>Protokół dnia</h2>
-    <p class="dim small">Odhaczam bloki, które wykonałem. Zapis zostaje w tej przeglądarce.</p>
-    <div class="score"><b id="todayScore">0</b><span>/ <span id="todayMax">0</span></span><div class="bar"><i id="todayBar"></i></div></div>
-    <ol class="checklist" id="checklist"></ol>
-  </section>
-  <section class="card">
-    <h3>Na dziś</h3>
-    <label for="fMit">Najważniejsze zadanie dnia</label>
-    <input type="text" id="fMit" maxlength="200" placeholder="Jedno zadanie, które przesuwa cel kwartału">
-    <label for="fHard">Trudna rzecz</label>
-    <input type="text" id="fHard" maxlength="200" placeholder="Rzecz, której wolałbym uniknąć, zrobiona przed 12:00">
-    <label for="fMade">Co dziś stworzyłem</label>
-    <input type="text" id="fMade" maxlength="300" placeholder="Tekst, nagranie, część projektu…">
-    <label for="fSleep">Sen ostatniej nocy (godziny)</label>
-    <input type="text" id="fSleep" inputmode="decimal" maxlength="4" placeholder="np. 6.8">
-    <p class="warn small" id="sleepWarn" hidden>Poniżej 6 godzin: obowiązuje tryb ochronny snu (Kodeks, rozdz. II).</p>
-    <label for="fNote">Dziennik</label>
-    <textarea id="fNote" maxlength="4000" placeholder="Fakty dnia, błędy, wnioski. Bez ocen siebie: co się stało i co dalej."></textarea>
-  </section>
-  <section class="card">
-    <h3>Ostatnie 28 dni</h3>
-    <div class="grid" id="history"></div>
-    <p class="dim small">Liczba w kratce to procent wykonanych bloków. Pusta kratka to dzień bez zapisu.</p>
-  </section>
-  <section class="card oath-card">
-    <h3>Przysięga</h3>
-    <div class="oath" id="oathToday"></div>
-  </section>
-</main>
-
 <!-- ======================================================================= KODEKS -->
 <main class="view" id="view-code">
   <section class="doc preface">
@@ -460,7 +416,7 @@
   <section class="doc" id="s-review">
     <div class="eyebrow">X</div>
     <h2>The Weekly Review</h2>
-    <p>Niedziela, 17:30–18:15. Spokojnie, z dziennikiem i danymi z tygodnia. Formularz jest w zakładce „Przegląd”.</p>
+    <p>Niedziela, 17:30–18:15. Spokojnie, z dziennikiem i danymi z tygodnia.</p>
     <ol class="list">
       <li>Ile dni protokołu dotrzymałem, wliczając dni w wersji minimalnej?</li>
       <li>Ile wynosił średni sen? Ile było nocy krótszych niż 6 godzin i dlaczego?</li>
@@ -506,70 +462,11 @@
     <p class="dim small">Czytam ją każdego ranka o 04:00, na głos albo w ciszy.</p>
     <div class="oath" id="oathMain"></div>
   </section>
+
+  <div class="download"><a class="btn" href="./sciana.png" download="THE CODE - sciana.png">Pobierz ścianę (A4)</a></div>
 </main>
 
-<!-- ======================================================================= PRZEGLĄD -->
-<main class="view" id="view-review" hidden>
-  <section class="card">
-    <div class="eyebrow" id="reviewWeek"></div>
-    <h2>Przegląd tygodnia</h2>
-    <p class="dim small">Niedziela, 17:30–18:15. Odpowiedzi zapisują się w tej przeglądarce.</p>
-    <div class="stats" id="weekStats"></div>
-    <div id="reviewForm"></div>
-  </section>
-  <section class="card">
-    <h3>Poprzednie przeglądy</h3>
-    <div id="reviewList" class="dim small">Brak zapisanych przeglądów.</div>
-  </section>
-  <section class="card">
-    <h3>Kopia zapasowa</h3>
-    <p class="dim small">Dane są zapisane tylko na tym urządzeniu. Kopię warto co jakiś czas zapisać w bezpiecznym miejscu.</p>
-    <div class="row">
-      <button type="button" class="btn" id="btnExport">Zapisz kopię (JSON)</button>
-      <label class="btn file">Wczytaj kopię<input type="file" id="fileImport" accept="application/json,.json" hidden></label>
-    </div>
-    <p class="small" id="backupMsg" role="status"></p>
-    <div id="legacyBox" hidden>
-      <h4>Dane poprzedniej aplikacji (The Wayne Protocol)</h4>
-      <p class="dim small">Na tym urządzeniu są zapisy z poprzedniej aplikacji: protokół, dziennik i historia. Nie zostały usunięte. Możesz je zapisać do pliku.</p>
-      <button type="button" class="btn" id="btnLegacy">Zapisz dane Wayne Protocol</button>
-    </div>
-  </section>
-</main>
-
-<!-- ======================================================================= ŚCIANA -->
-<main class="view" id="view-wall" hidden>
-  <div class="wall-actions"><button type="button" class="btn gold" id="btnPrint">Drukuj stronę na ścianę</button><span class="dim small">A4, pionowo. W oknie druku wybierz „Zapisz jako PDF”, jeśli chcesz plik.</span></div>
-  <article class="wall" id="wall">
-    <header><h1>THE CODE</h1><p>Nie działam, bo mam ochotę. Działam, bo zdecydowałem, kim chcę być.</p></header>
-    <div class="wall-cols">
-      <div>
-        <h2>Zasady</h2>
-        <ol class="wall-rules" id="wallRules"></ol>
-      </div>
-      <div>
-        <h2>Dzień</h2>
-        <table class="wall-day">
-          <tr><th>04:00</th><td>Pobudka, modlitwa, przysięga</td></tr>
-          <tr><th>04:00–05:00</th><td>Bieg, zimny prysznic, plan dnia</td></tr>
-          <tr><th>05:00–05:30</th><td>Mobilność</td></tr>
-          <tr><th>05:30–06:30</th><td>Deep Work I</td></tr>
-          <tr><th>06:30–14:30</th><td>Praca i obowiązki, trudna rzecz przed 12:00</td></tr>
-          <tr><th>14:30–15:15</th><td>Jednostka twórcza</td></tr>
-          <tr><th>15:30–16:45</th><td>Trening</td></tr>
-          <tr><th>16:45–17:30</th><td>Regeneracja</td></tr>
-          <tr><th>17:30–19:00</th><td>Deep Work II, czytanie</td></tr>
-          <tr><th>19:00–20:30</th><td>Mobilność, wieczór, bez ekranów od 20:00</td></tr>
-          <tr><th>20:30–21:00</th><td>Pismo Święte, rachunek sumienia</td></tr>
-          <tr><th>21:00</th><td>Sen</td></tr>
-        </table>
-        <h2>Przysięga</h2>
-        <div class="oath" id="oathWall"></div>
-      </div>
-    </div>
-  </article>
-</main>
-
+<script src="./assets/code-data.js"></script>
 <script src="./assets/app.js"></script>
 </body>
 </html>
