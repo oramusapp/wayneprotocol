@@ -32,6 +32,9 @@ p { margin: 0 0 12px; }
 .eyebrow { font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--accent2); margin-bottom: 6px; }
 .dim { color: var(--dim); } .small { font-size: .86rem; } .warn { color: var(--warn); } .ok { color: var(--ok); }
 .lead { font-family: var(--serif); font-size: 1.15rem; color: var(--dim); letter-spacing: .08em; }
+.motto { margin: 18px 0 22px; padding: 14px 0 14px 18px; border-left: 2px solid var(--accent); }
+.motto p { font-family: var(--serif); font-size: 1.3rem; line-height: 1.4; margin: 0 0 4px; letter-spacing: .01em; }
+.motto p:last-child { margin-bottom: 0; }
 
 /* dokument */
 .toc ol { margin: 0; padding-left: 0; list-style: none; columns: 2; column-gap: 18px; }
